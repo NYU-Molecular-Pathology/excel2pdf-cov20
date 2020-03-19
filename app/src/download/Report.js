@@ -120,7 +120,7 @@ class Report extends Component {
 
     getResults(testData, wellName) {
         let rows = []
-        rows.push(["SampleID", ...new Set(testData.map(s => s.name.trim())),"Marker"]);
+        rows.push(["SampleID", ...new Set(testData.map(s => s.name)),"Marker"]);
         rows.push(["Plate Well", ...(testData.filter(w => w.marker === "N1").map(w=>w.well.replace(wellName,""))), " "]);
         rows.push([wellName === "A"? "A":"E",...(testData.filter(w => w.marker === "N1").map(w=>w.ctValue)), "N1"]);
         rows.push([wellName === "A"? "B":"F",...(testData.filter(w => w.marker === "N2").map(w=>w.ctValue)),"N2"]);
@@ -153,12 +153,14 @@ class Report extends Component {
             const endRow = testData.findIndex(x=> x[0] === "D12") + 1;
             for (let i = startRow+1; i < endRow; i++) {
                 const row = testData[i];
-                tabData1.push(new CovidSample(row[1]||" ",row[0]||" ",row[2]||" ", row[4]||" "));
+                if (row.length > 1) {
+                    tabData1.push(new CovidSample(row[1].trim(), row[0] || " ", row[2] || " ", row[4] || " "));
+                }
             }
             const data2 = testData.slice(endRow, testData.length);
             if (data2.length > 1) {
                 data2.map(
-                    row => tabData2.push(new CovidSample(row[1]||" ",row[0]||" ",row[2]||" ", row[4]||" ")));
+                    row => row.length > 1 && tabData2.push(new CovidSample(row[1].trim(),row[0]||" ",row[2]||" ", row[4]||" ")));
             }
             this.setState({aRows: this.getResults(tabData1, "A")});
             if (tabData2.length > 0) {
