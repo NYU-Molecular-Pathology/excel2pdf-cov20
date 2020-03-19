@@ -2,29 +2,46 @@ table {
     border: 1px solid #6a3f87;
     border-collapse: collapse;
     margin: 0;
-    padding: 0;
+    padding: 50px;
     width: 100%;
     table-layout: fixed;
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+td {
+    padding: 0.3rem;
 }
 
 table tr {
     background-color: #ffffff;
     border: 1px solid #6a3f87;
-    padding: .35em;
+    padding: 50px;
 
 }
 
 table td.first {
-    padding: .625em;
+    padding: 50px;
     text-align: center;
-    border-left: 1px solid #6a3f87;
-    border-right: 1px solid #6a3f87;
     background-color: #e0d2ff;
 }
 
 table, thead, th {
+    border: 1px solid #ffffff;
+    padding: 10px;
+    text-align: center;
+    border-spacing: 0.5rem;
+    border-bottom: 3px solid #ffffff;
+}
+
+table th{
     background-color: #d4b0ff;
-    border: 0px solid #6a3f87;
+}
+table th:first-child{
+    border-right: 3px solid #868686;
+}
+table th:last-child{
+    border-left: 3px solid #868686;
 }
 
 table tr:last-child {
@@ -32,14 +49,25 @@ table tr:last-child {
 }
 table tr:first-child {
     background-color: #92b0b3;
-}
-table td:last-child {
-    background-color: #d2caac;
-}
-table td:first-child {
-    background-color: #d2caac;
+
 }
 
+table td:first-child {
+    background-color: #d2caac;
+    border: 1px solid #ffffff;
+    border-right: 3px solid #868686;
+}
+
+td:last-child {
+    background-color: #d2caac;
+    border: 1px solid #ffffff;
+    border-left: 3px solid #868686;
+    font-weight: 600;
+    color: #3888e4;
+}
+
+
+
 .all {
-  font-size: 11px;
+    font-size: 16px;
 }
