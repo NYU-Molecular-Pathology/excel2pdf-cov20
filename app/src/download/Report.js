@@ -170,9 +170,22 @@ class Report extends Component {
                 <span>{this.state.runID}</span><br />
                 <span>{this.state.runDate}</span><br />
                 <table>
+                    <thead>
+                    {
+                        this.state.aRows.slice(0,1).map((numList,i) =>(
+                            <tr key={i}>
+                                {
+                                    numList.map((num,j)=>
+                                        <th key={j}>{num}</th>
+                                    )
+                                }
+                            </tr>
+                        ))
+                    }
+                    </thead>
                     <tbody>
                     {
-                        this.state.aRows.map((numList,i) =>(
+                        this.state.aRows.slice(1).map((numList,i) =>(
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
@@ -184,10 +197,24 @@ class Report extends Component {
                     }
                     </tbody>
                 </table><br />
-                { this.state.eRows.length > 0 && <table>
+                { this.state.eRows.length > 0 &&
+                <table>
+                    <thead>
+                    {
+                        this.state.eRows.slice(0,1).map((numList,i) =>(
+                            <tr key={i}>
+                                {
+                                    numList.map((num,j)=>
+                                        <th key={j}>{num}</th>
+                                    )
+                                }
+                            </tr>
+                        ))
+                    }
+                    </thead>
                     <tbody>
                     {
-                        this.state.eRows.map((numList,i) =>(
+                        this.state.eRows.slice(1).map((numList,i) =>(
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
