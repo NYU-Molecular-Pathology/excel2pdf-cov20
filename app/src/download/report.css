@@ -39,3 +39,7 @@ table td:last-child {
 table td:first-child {
     background-color: #d2caac;
 }
+
+.all {
+  font-size: 11px;
+}

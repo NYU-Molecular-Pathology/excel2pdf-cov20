@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Papa from 'papaparse';
-import "./Report.css";
+import "./report.css";
 import {CovidSample} from "./CovidSample";
 
 class Report extends Component {
@@ -170,6 +170,7 @@ class Report extends Component {
             <div class="all">
                 <span>{this.state.runID}</span><br />
                 <span>{this.state.runDate}</span><br />
+                <br />
                 <table>
                     <thead>
                     {
