@@ -12,8 +12,9 @@ import Pdf from "react-to-pdf";
 
 const Button = React.forwardRef((props, ref) => {
   return (
-        <Pdf targetRef={ref} filename="covidreport.pdf">
-          {({ toPdf }) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload} />&nbsp;Generate Pdf</button>}
+        <Pdf targetRef={ref} filename={Date().toString().split(" ").splice(2,3).join("-") + "-report.pdf"}
+             options={{orientation: 'landscape'}}>
+          {({ toPdf }) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload} />&nbsp;Download Test Results</button>}
         </Pdf>
   );
 });
@@ -25,9 +26,7 @@ class Upload extends Component {
       files: [],
       uploading: false,
       uploadProgress: {},
-      successfullUploaded: false,
-      numPages: null,
-      pageNumber: 1
+      successfullUploaded: false
     };
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
@@ -40,10 +39,6 @@ class Upload extends Component {
     this.setState(prevState => ({
       files: prevState.files.concat(files)
     }));
-  }
-
-  onDocumentLoadSuccess = ({ numPages }) => {
-    this.setState({ numPages });
   }
 
   async uploadFiles() {
@@ -133,17 +128,17 @@ class Upload extends Component {
               <Email />&nbsp;&nbsp;&nbsp;
               <button onClick = {this._refreshPage} ><FontAwesomeIcon icon={faUpload} />&nbsp;Upload RT-PCR Data&nbsp;&nbsp;&nbsp;</button>
             </div>
-            <div ref={docToPrint}>
+            <div ref={docToPrint} className="ReportCard">
               <Report dataFromParent = {this.state.files}/>
             </div>
           </div>);
     } else {
       return (
         <button
-          disabled={this.state.files.length < 0 || this.state.uploading}
+          disabled={this.state.files.length < 1 || this.state.uploading}
           onClick={this.uploadFiles}
         >
-          <FontAwesomeIcon icon={faUpload} />&nbsp;Upload
+          <FontAwesomeIcon icon={faUpload} />&nbsp;Submit
         </button>
       );
     }
@@ -175,7 +170,7 @@ class Upload extends Component {
             {this.state.files.length === 0 &&
               <ul style={{fontSize: 18, listStyleType:"none"}}>
                 <li><FontAwesomeIcon icon={faUpload} />&nbsp;Upload COVID test data by dragging/dropping a file into the dashed circle on the left</li>
-                <li><FontAwesomeIcon icon={faDownload} />&nbsp;View calculated test results by clicking on "Download Test Results" at the bottom</li>
+                <li><FontAwesomeIcon icon={faDownload} />&nbsp;Save calculated test results by clicking on "Download Test Results" at the bottom</li>
                 <li><FontAwesomeIcon icon={faAddressCard} />&nbsp;Or Send notifications by clicking on "Email Test Results"</li>
                 <li><FontAwesomeIcon icon={faRedoAlt} />&nbsp;Reload new test data by clicking on "Upload RT-PCR data"</li>
               </ul>}
