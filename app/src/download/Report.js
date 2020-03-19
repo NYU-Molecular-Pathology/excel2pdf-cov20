@@ -36,9 +36,85 @@ class Report extends Component {
             if (!isNaN(parseFloat(x)) && parseFloat(x) < 40) {
                 return "Pass";
             } else {
-                return x;
+                return "Failed";
             }
         });
+    }
+
+    getECQCResults(row) {
+        row.map(x=> {
+            if (!isNaN(parseFloat(x)) && parseFloat(x) < 40) {
+                return "Pass";
+            } else {
+                return 'Failed';
+            }
+        });
+    }
+
+    getNTCCondition(rows) {
+        const evalRows = rows.slice(2,6);
+        const ntcConditions = [...new Set(evalRows.map(x=>x[1]))];
+        if (ntcConditions.length === 1 && ntcConditions[0] === 'Undetermined') {
+            return 'Pass';
+        } else {
+            return 'Failed';
+        }
+    }
+
+    getPCCondition(rows) {
+        const evalRows = rows.slice(2,6);
+        const pcConditions = [...new Set(evalRows.map(x=>x[x.length-2]))];
+        for (const con in pcConditions) {
+            if (isNaN(parseFloat(con))) {
+                return "Failed";
+            } else if  (parseFloat(con) > 40.0) {
+                return "Failed"
+            }
+        }
+        return "Pass";
+    }
+
+    getECCondition(cols) {
+        return (cols[0] === 'Undetermined' && cols[1] === 'Undetermined'
+            && cols[2] === 'Undetermined' && !isNaN(parseFloat(cols[3])) &&
+                parseFloat(cols[3]) < 40.0)
+    }
+
+    getECQCRow(rows) {
+        let ecRow = []
+        const eRows = rows.slice(2,6);
+        for (let i = 0;i < eRows[0].length; i++) {
+            const cols = eRows.map(x=>x[i]);
+            if (this.getECCondition(cols)) {
+                ecRow.push("Pass");
+            } else {
+                ecRow.push("Failed");
+            }
+        }
+        return ecRow;
+    }
+
+    getResultVal(cols) {
+        if ([...new Set(cols)][0] === 'Undetermined') {
+            return 'Inconclusive';
+        }else if (!isNaN(parseFloat(cols[0])) && parseFloat(cols[0]) < 40.0
+            && !isNaN(parseFloat(cols[1])) && parseFloat(cols[1]) < 40.0
+            && !isNaN(parseFloat(cols[2])) && parseFloat(cols[2]) < 40.0
+            && !isNaN(parseFloat(cols[3])) && parseFloat(cols[3]) < 40.0) {
+            return 'Detected';
+        } else {
+            return "Undetected";
+        }
+    }
+
+    getResultRow(rows) {
+        let resRow = []
+        const eRows = rows.slice(2,6);
+        for (let i = 0;i < eRows[0].length; i++) {
+            const cols = eRows.map(x=>x[i]);
+            resRow.push(this.getResultVal(cols));
+        }
+        return resRow;
     }
 
     getResults(testData, wellName) {
@@ -51,23 +127,19 @@ class Report extends Component {
         const qcRow = testData.filter(w => w.marker === "RP").map(w=>w.ctValue);
         rows.push([wellName === "A"? "D":"H",...qcRow, "RP"]);
         const rpQCRows = qcRow.map(x=> (!isNaN(parseFloat(x)) && parseFloat(x) < 40.0)? 'Pass':x);
+        if (wellName === "A") {
+            rpQCRows[1] = this.getNTCCondition(rows);
+            rpQCRows[rpQCRows.length - 1] = this.getPCCondition(rows);
+        }
         rows.push(["RP QC",...rpQCRows, " "]);
-        const results = rpQCRows.map(x=> {
-            if (x === "Undetermined") {
-                return "Undetected";
-            } else if( x === "Pass") {
-                return "Undetected";
-            } else {
-                return "Inconclusive";
-            }});
-        rows.push(["Result",...results, " "]);
+        rows.push(["EC QC", ...(this.getECQCRow(rows))," "]);
+        rows.push(["Result",...this.getResultRow(rows), " "]);
         return rows;
     }
 
     processData() {
         const testData = this.state.data;
         let runID, runDate;
-        let tab1 = null, tab2 = null;
         if (testData.length > 0) {
             runID = "RUN ID: " + testData[0].toString().split(": ")[1].replace(".sds","");
             runDate = "RUN DATE: " + testData[8].join().replace("Last Modified: ","").split(",").slice(1,3).join();
@@ -76,22 +148,17 @@ class Report extends Component {
                 runID: runID
             });
             let tabData1 = [], tabData2 = [];
-            let startRow = testData.findIndex(x=> x[0] === "Well");
-            let endRow = -1;
-            for (let i = startRow+1; i < testData.length; i++) {
-                const row = testData[i]
-                tabData1.push(new CovidSample(row[1],row[0],row[2], row[4]))
-                if (row[0].indexOf("D") !== -1 && row[1] === "PC") {
-                    endRow = ++i;
-                    break;
-                }
+            const startRow = testData.findIndex(x=> x[0] === "Well");
+            const endRow = testData.findIndex(x=> x[0] === "D12") + 1;
+            for (let i = startRow+1; i < endRow; i++) {
+                const row = testData[i];
+                tabData1.push(new CovidSample(row[1],row[0],row[2], row[4]));
             }
             testData.slice(endRow, testData.length -1).map(
                 row => tabData2.push(new CovidSample(row[1],row[0],row[2], row[4])));
             this.setState({aRows:this.getResults(tabData1, "A")});
             if (tabData2.length > 0) {
-                //tab2 = this.getResults(tabData2, "E");
-                this.setState({eRows:this.getResults(tabData2, "e")});
+                this.setState({eRows:this.getResults(tabData2, "E")});
             }
         }
     }
