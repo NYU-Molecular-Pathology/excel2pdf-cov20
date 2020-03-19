@@ -8,6 +8,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faUpload, faDownload} from '@fortawesome/fontawesome-free-solid'
 import {faAddressCard} from "@fortawesome/fontawesome-free-regular";
 import {faRedoAlt} from "@fortawesome/free-solid-svg-icons/faRedoAlt";
+import Pdf from "react-to-pdf";
+
+const Button = React.forwardRef((props, ref) => {
+  return (
+        <Pdf targetRef={ref} filename="covidreport.pdf">
+          {({ toPdf }) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload} />&nbsp;Generate Pdf</button>}
+        </Pdf>
+  );
+});
 
 class Upload extends Component {
   constructor(props) {
@@ -16,7 +25,9 @@ class Upload extends Component {
       files: [],
       uploading: false,
       uploadProgress: {},
-      successfullUploaded: false
+      successfullUploaded: false,
+      numPages: null,
+      pageNumber: 1
     };
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
@@ -29,6 +40,10 @@ class Upload extends Component {
     this.setState(prevState => ({
       files: prevState.files.concat(files)
     }));
+  }
+
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({ numPages });
   }
 
   async uploadFiles() {
@@ -109,12 +124,18 @@ class Upload extends Component {
   }
 
   renderActions() {
+    let docToPrint = React.createRef();
     if (this.state.successfullUploaded) {
       return (
           <div>
-            <Report dataFromParent = {this.state.files}/>
-            <Email /><br />
-            <button onClick = {this._refreshPage} ><FontAwesomeIcon icon={faUpload} />&nbsp;Upload RT-PCR Data&nbsp;&nbsp;&nbsp;</button>
+            <div>
+              <Button ref={docToPrint} />&nbsp;&nbsp;&nbsp;
+              <Email />&nbsp;&nbsp;&nbsp;
+              <button onClick = {this._refreshPage} ><FontAwesomeIcon icon={faUpload} />&nbsp;Upload RT-PCR Data&nbsp;&nbsp;&nbsp;</button>
+            </div>
+            <div ref={docToPrint}>
+              <Report dataFromParent = {this.state.files}/>
+            </div>
           </div>);
     } else {
       return (
