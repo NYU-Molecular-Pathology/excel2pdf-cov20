@@ -83,7 +83,7 @@ class Report extends Component {
     getECQCRow(rows) {
         let ecRow = []
         const eRows = rows.slice(2,6);
-        for (let i = 0;i < eRows[0].length; i++) {
+        for (let i = 0;i < eRows[0].length-2; i++) {
             const cols = eRows.map(x=>x[i]);
             if (this.getECCondition(cols)) {
                 ecRow.push("Pass");
@@ -91,6 +91,7 @@ class Report extends Component {
                 ecRow.push("Failed");
             }
         }
+        console.log(ecRow)
         return ecRow;
     }
 
@@ -110,7 +111,7 @@ class Report extends Component {
     getResultRow(rows) {
         let resRow = []
         const eRows = rows.slice(2,6);
-        for (let i = 0;i < eRows[0].length; i++) {
+        for (let i = 0;i < eRows[0].length-2; i++) {
             const cols = eRows.map(x=>x[i]);
             resRow.push(this.getResultVal(cols));
         }
