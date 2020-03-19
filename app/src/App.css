@@ -1,8 +1,9 @@
 .App {
   text-align: center;
   background-color: rgb(188, 185, 236);
-  background-image: url("images/covid-world-map.png");
+  background-image: url("images/corona.jpg");
   background-repeat: no-repeat;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -14,7 +15,8 @@
 .Card {
   background-color: white;
   padding: 32px;
-  width: 50%;
+  width: 80%;
+  height: 50%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;

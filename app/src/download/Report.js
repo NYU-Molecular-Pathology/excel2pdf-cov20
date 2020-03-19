@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Papa from 'papaparse';
+import "./Report.css";
 import {CovidSample} from "./CovidSample";
 
 class Report extends Component {
@@ -166,14 +167,14 @@ class Report extends Component {
 
     render() {
         return (
-            <div>
+            <div class="all">
                 <span>{this.state.runID}</span><br />
                 <span>{this.state.runDate}</span><br />
                 <table>
                     <thead>
                     {
                         this.state.aRows.slice(0,1).map((numList,i) =>(
-                            <tr key={i}>
+                            <tr key={i} class="table1_header">
                                 {
                                     numList.map((num,j)=>
                                         <th key={j}>{num}</th>
@@ -189,7 +190,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
-                                        <td key={j}>{num}</td>
+                                        <td key={j} class="table1_body">{num}</td>
                                     )
                                 }
                             </tr>
@@ -202,7 +203,7 @@ class Report extends Component {
                     <thead>
                     {
                         this.state.eRows.slice(0,1).map((numList,i) =>(
-                            <tr key={i}>
+                            <tr key={i} class="table2_header">
                                 {
                                     numList.map((num,j)=>
                                         <th key={j}>{num}</th>
@@ -218,7 +219,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
-                                        <td key={j}>{num}</td>
+                                        <td key={j} class="table2_body">{num}</td>
                                     )
                                 }
                             </tr>

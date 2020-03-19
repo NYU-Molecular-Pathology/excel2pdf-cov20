@@ -25,11 +25,12 @@
 
 .Actions {
   display: flex;
-  flex: 1;
   width: 100%;
   align-items: flex-end;
   flex-direction: column;
   margin-top: 32px;
+  overflow: auto;
+  flex-wrap: wrap;
 }
 
 .Title {
