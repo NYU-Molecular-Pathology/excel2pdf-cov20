@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Papa from 'papaparse';
-import "./report.css";
 import {CovidSample} from "./CovidSample";
+import "./report.css";
 
 class Report extends Component {
     constructor(props) {
@@ -92,7 +92,6 @@ class Report extends Component {
                 ecRow.push("Failed");
             }
         }
-        console.log(ecRow)
         return ecRow;
     }
 
@@ -121,7 +120,7 @@ class Report extends Component {
 
     getResults(testData, wellName) {
         let rows = []
-        rows.push(["SampleID", ...new Set(testData.map(s => s.name)),"Marker"]);
+        rows.push(["SampleID", ...new Set(testData.map(s => s.name.trim())),"Marker"]);
         rows.push(["Plate Well", ...(testData.filter(w => w.marker === "N1").map(w=>w.well.replace(wellName,""))), " "]);
         rows.push([wellName === "A"? "A":"E",...(testData.filter(w => w.marker === "N1").map(w=>w.ctValue)), "N1"]);
         rows.push([wellName === "A"? "B":"F",...(testData.filter(w => w.marker === "N2").map(w=>w.ctValue)),"N2"]);
@@ -143,7 +142,7 @@ class Report extends Component {
         const testData = this.state.data;
         let runID, runDate;
         if (testData.length > 0) {
-            runID = "RUN ID: " + testData[0].toString().split(": ")[1].replace(".sds","");
+            runID = "RUN ID: " + testData[0].join().toString().split(".sds")[0].split(": ")[1];
             runDate = "RUN DATE: " + testData[8].join().replace("Last Modified: ","").split(",").slice(1,3).join();
             this.setState({
                 runDate: runDate,
@@ -154,28 +153,30 @@ class Report extends Component {
             const endRow = testData.findIndex(x=> x[0] === "D12") + 1;
             for (let i = startRow+1; i < endRow; i++) {
                 const row = testData[i];
-                tabData1.push(new CovidSample(row[1],row[0],row[2], row[4]));
+                tabData1.push(new CovidSample(row[1]||" ",row[0]||" ",row[2]||" ", row[4]||" "));
             }
-            testData.slice(endRow, testData.length -1).map(
-                row => tabData2.push(new CovidSample(row[1],row[0],row[2], row[4])));
-            this.setState({aRows:this.getResults(tabData1, "A")});
+            const data2 = testData.slice(endRow, testData.length);
+            if (data2.length > 1) {
+                data2.map(
+                    row => tabData2.push(new CovidSample(row[1]||" ",row[0]||" ",row[2]||" ", row[4]||" ")));
+            }
+            this.setState({aRows: this.getResults(tabData1, "A")});
             if (tabData2.length > 0) {
-                this.setState({eRows:this.getResults(tabData2, "E")});
+                    this.setState({eRows: this.getResults(tabData2, "E")});
             }
         }
     }
 
     render() {
         return (
-            <div class="all">
+            <div>
                 <span>{this.state.runID}</span><br />
                 <span>{this.state.runDate}</span><br />
-                <br />
                 <table>
                     <thead>
                     {
                         this.state.aRows.slice(0,1).map((numList,i) =>(
-                            <tr key={i} class="table1_header">
+                            <tr key={i}>
                                 {
                                     numList.map((num,j)=>
                                         <th key={j}>{num}</th>
@@ -191,7 +192,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
-                                        <td key={j} class="table1_body">{num}</td>
+                                        <td key={j}>{num}</td>
                                     )
                                 }
                             </tr>
@@ -204,7 +205,7 @@ class Report extends Component {
                     <thead>
                     {
                         this.state.eRows.slice(0,1).map((numList,i) =>(
-                            <tr key={i} class="table2_header">
+                            <tr key={i}>
                                 {
                                     numList.map((num,j)=>
                                         <th key={j}>{num}</th>
@@ -220,7 +221,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
-                                        <td key={j} class="table2_body">{num}</td>
+                                        <td key={j}>{num}</td>
                                     )
                                 }
                             </tr>
