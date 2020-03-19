@@ -2,7 +2,7 @@ table {
     border: 1px solid #6a3f87;
     border-collapse: collapse;
     margin: 0;
-    padding: 50px;
+    padding: 5px;
     width: 100%;
     table-layout: fixed;
     border-radius: 10px;
@@ -16,7 +16,7 @@ td {
 table tr {
     background-color: #ffffff;
     border: 1px solid #6a3f87;
-    padding: 50px;
+    padding: 0px;
 
 }
 
@@ -28,20 +28,20 @@ table td.first {
 
 table, thead, th {
     border: 1px solid #ffffff;
-    padding: 10px;
+    padding: 0px;
     text-align: center;
-    border-spacing: 0.5rem;
-    border-bottom: 3px solid #ffffff;
+    border-spacing: 0.05rem;
+    border-bottom: 1px solid #ffffff;
 }
 
 table th{
     background-color: #d4b0ff;
 }
 table th:first-child{
-    border-right: 3px solid #868686;
+    border-right: 1px solid #868686;
 }
 table th:last-child{
-    border-left: 3px solid #868686;
+    border-left: 1px solid #868686;
 }
 
 table tr:last-child {
@@ -55,19 +55,17 @@ table tr:first-child {
 table td:first-child {
     background-color: #d2caac;
     border: 1px solid #ffffff;
-    border-right: 3px solid #868686;
+    border-right: 1px solid #868686;
 }
 
 td:last-child {
     background-color: #d2caac;
     border: 1px solid #ffffff;
-    border-left: 3px solid #868686;
+    border-left: 1px solid #868686;
     font-weight: 600;
     color: #3888e4;
 }
 
-
-
 .all {
-    font-size: 16px;
+    font-size: 11px;
 }
