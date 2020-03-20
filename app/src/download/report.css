@@ -13,7 +13,8 @@ table {
 
 table th{
     background-color: #5da0e8;
-    font-size: 11pt;
+    font-size: 12px;
+    font-weight: bold;
 }
 table, thead, th {
     border: 1px solid #ffffff;
@@ -62,7 +63,8 @@ table td:first-child {
     background-color: #d2caac;
     border: 1px solid #ffffff;
     font-weight: 600;
-    font-size: 12pt;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 table td:last-child {
@@ -70,7 +72,14 @@ table td:last-child {
     border: 1px solid #ffffff;
     font-weight: 600;
     color: #3888e4;
-    font-size: 14pt;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+span {
+    font-size: 15px;
+    font-weight:600;
+    padding:10px;
 }
 
 .all {

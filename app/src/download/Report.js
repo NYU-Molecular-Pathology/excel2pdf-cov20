@@ -42,16 +42,6 @@ class Report extends Component {
         });
     }
 
-    getECQCResults(row) {
-        row.map(x=> {
-            if (!isNaN(parseFloat(x)) && parseFloat(x) < 40) {
-                return "Pass";
-            } else {
-                return 'Failed';
-            }
-        });
-    }
-
     getNTCCondition(rows) {
         const evalRows = rows.slice(2,6);
         const ntcConditions = [...new Set(evalRows.map(x=>x[1]))];
@@ -65,55 +55,46 @@ class Report extends Component {
     getPCCondition(rows) {
         const evalRows = rows.slice(2,6);
         const pcConditions = [...new Set(evalRows.map(x=>x[x.length-2]))];
-        for (const con in pcConditions) {
-            if (isNaN(parseFloat(con))) {
-                return "Failed";
-            } else if  (parseFloat(con) > 40.0) {
-                return "Failed"
-            }
-        }
-        return "Pass";
-    }
-
-    getECCondition(cols) {
-        return (cols[0] === 'Undetermined' && cols[1] === 'Undetermined'
-            && cols[2] === 'Undetermined' && !isNaN(parseFloat(cols[3])) &&
-                parseFloat(cols[3]) < 40.0)
-    }
-
-    getECQCRow(rows) {
-        let ecRow = []
-        const eRows = rows.slice(2,6);
-        for (let i = 0;i < eRows[0].length-2; i++) {
-            const cols = eRows.map(x=>x[i]);
-            if (this.getECCondition(cols)) {
-                ecRow.push("Pass");
+        pcConditions.map(x=> {
+            if (!isNaN(x) && parseFloat(x) < 40.0) {
+                return "Pass";
             } else {
-                ecRow.push("Failed");
+                return "Failed";
             }
-        }
-        return ecRow;
+        });
     }
 
-    getResultVal(cols) {
-        if ([...new Set(cols)][0] === 'Undetermined') {
-            return 'Inconclusive';
+    getResultVal(cols, isNTC, isEC, isPC) {
+        if ([...new Set(cols)][0] === 'Undetermined' && isNTC) {
+            return "Pass";
         }else if (!isNaN(parseFloat(cols[0])) && parseFloat(cols[0]) < 40.0
             && !isNaN(parseFloat(cols[1])) && parseFloat(cols[1]) < 40.0
             && !isNaN(parseFloat(cols[2])) && parseFloat(cols[2]) < 40.0
             && !isNaN(parseFloat(cols[3])) && parseFloat(cols[3]) < 40.0) {
-            return 'Detected';
+            if (isPC) {
+                return "Pass";
+            } else {
+                return 'Detected';
+            }
+        } else if (cols[0] === "Undetermined" && cols[1] === "Undetermined"
+                    && cols[2] === "Undetermined" && !isNaN(cols[3]) && parseFloat(cols[3]) < 40.0) {
+            if (isEC) {
+                return "Pass";
+            } else {
+                return 'Undetected';
+            }
         } else {
-            return "Undetected";
+            return "Inconclusive";
         }
     }
 
-    getResultRow(rows) {
+    getResultRow(rows, wellName) {
         let resRow = []
         const eRows = rows.slice(2,6);
-        for (let i = 0;i < eRows[0].length-2; i++) {
+        for (let i = 1;i < eRows[0].length-1; i++) {
             const cols = eRows.map(x=>x[i]);
-            resRow.push(this.getResultVal(cols));
+            resRow.push(this.getResultVal(cols, (wellName === "A" && i===1),
+                (wellName === "A" && i===eRows[0].length-3),(wellName === "A" && i===eRows[0].length-2)));
         }
         return resRow;
     }
@@ -128,13 +109,8 @@ class Report extends Component {
         const qcRow = testData.filter(w => w.marker === "RP").map(w=>w.ctValue);
         rows.push([wellName === "A"? "D":"H",...qcRow, "RP"]);
         const rpQCRows = qcRow.map(x=> (!isNaN(parseFloat(x)) && parseFloat(x) < 40.0)? 'Pass':x);
-        if (wellName === "A") {
-            rpQCRows[1] = this.getNTCCondition(rows);
-            rpQCRows[rpQCRows.length - 1] = this.getPCCondition(rows);
-        }
         rows.push(["RP QC",...rpQCRows, " "]);
-        rows.push(["EC QC", ...(this.getECQCRow(rows))," "]);
-        rows.push(["Result",...this.getResultRow(rows), " "]);
+        rows.push(["Result",...this.getResultRow(rows, wellName), " "]);
         return rows;
     }
 
@@ -149,18 +125,20 @@ class Report extends Component {
                 runID: runID
             });
             let tabData1 = [], tabData2 = [];
-            const startRow = testData.findIndex(x=> x[0] === "Well");
+            const startRow = testData.findIndex(x=> x[0] === "Well") +1;
             const endRow = testData.findIndex(x=> x[0] === "D12") + 1;
-            for (let i = startRow+1; i < endRow; i++) {
+            for (let i = startRow; i < endRow; i++) {
                 const row = testData[i];
                 if (row.length > 1) {
-                    tabData1.push(new CovidSample(row[1].trim(), row[0] || " ", row[2] || " ", row[4] || " "));
+                    tabData1.push(new CovidSample(row[1].trim(), row[0], row[2],
+                        isNaN(parseFloat(row[4]))? row[4]: parseFloat(row[4]).toFixed(2)));
                 }
             }
             const data2 = testData.slice(endRow, testData.length);
             if (data2.length > 1) {
                 data2.map(
-                    row => row.length > 1 && tabData2.push(new CovidSample(row[1].trim(),row[0]||" ",row[2]||" ", row[4]||" ")));
+                    row => row.length > 1 && tabData2.push(new CovidSample(row[1].trim(),row[0],row[2],
+                        isNaN(parseFloat(row[4]))? row[4]: parseFloat(row[4]).toFixed(2))));
             }
             this.setState({aRows: this.getResults(tabData1, "A")});
             if (tabData2.length > 0) {
@@ -173,9 +151,8 @@ class Report extends Component {
         return (
             <div>
                 <br/>
-                <span style={{fontSize: 18, fontWeight:600, padding:10}} >{this.state.runID}</span><br />
-                <br/>
-                <span style={{fontSize: 18, fontWeight:600, padding:10}}>{this.state.runDate}</span><br />
+                <span>{this.state.runID}</span> &nbsp;&nbsp;&nbsp;
+                <span>{this.state.runDate}</span>
                 <table>
                     <thead>
                     {
@@ -192,7 +169,7 @@ class Report extends Component {
                     </thead>
                     <tbody>
                     {
-                        this.state.aRows.slice(1).map((numList,i) =>(
+                        this.state.aRows.slice(1, this.state.aRows.length-1).map((numList,i) =>(
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
@@ -202,6 +179,17 @@ class Report extends Component {
                             </tr>
                         ))
                     }
+                {
+                    this.state.aRows.slice(this.state.aRows.length-1).map((numList,i) =>(
+                        <tr key={i}>
+                    {
+                        numList.map((num,j)=> ["Detected","Failed","Inconclusive"].includes(num)?
+                            <td key={j} style={{color: "red"}}>{num}</td>:<td key={j}>{num}</td>
+                )
+                }
+        </tr>
+        ))
+        }
                     </tbody>
                 </table><br />
                 { this.state.eRows.length > 0 &&
@@ -221,7 +209,7 @@ class Report extends Component {
                     </thead>
                     <tbody>
                     {
-                        this.state.eRows.slice(1).map((numList,i) =>(
+                        this.state.eRows.slice(1, this.state.eRows.length-1).map((numList,i) =>(
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
@@ -230,6 +218,17 @@ class Report extends Component {
                                 }
                             </tr>
                         ))
+                    }
+                    {
+                        this.state.eRows.slice(this.state.eRows.length-1).map((numList,i) =>(
+                            <tr key={i}>
+                        {
+                            numList.map((num,j)=> ["Detected","Failed","Inconclusive"].includes(num)?
+                                <td key={j} style={{color: "red"}}>{num}</td>:<td key={j}>{num}</td>
+                    )
+                    }
+                    </tr>
+                    ))
                     }
                     </tbody>
                 </table>}
