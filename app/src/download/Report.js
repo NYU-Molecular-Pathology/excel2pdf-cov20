@@ -108,7 +108,7 @@ class Report extends Component {
         rows.push([wellName === "A"? "C":"G",...(testData.filter(w => w.marker === "N3").map(w=>w.ctValue)),"N3"]);
         const qcRow = testData.filter(w => w.marker === "RP").map(w=>w.ctValue);
         rows.push([wellName === "A"? "D":"H",...qcRow, "RP"]);
-        const rpQCRows = qcRow.map(x=> (!isNaN(parseFloat(x)) && parseFloat(x) < 40.0)? 'Pass':x);
+        const rpQCRows = qcRow.map(x=> (!isNaN(parseFloat(x)) && parseFloat(x) < 40.0)? 'Pass':x==="Undetermined"?"Pass":x);
         rows.push(["RP QC",...rpQCRows, " "]);
         rows.push(["Result",...this.getResultRow(rows, wellName), " "]);
         return rows;
