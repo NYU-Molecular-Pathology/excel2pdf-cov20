@@ -13,7 +13,7 @@ import Pdf from "react-to-pdf";
 const Button = React.forwardRef((props, ref) => {
   return (
         <Pdf targetRef={ref} filename={Date().toString().split(" ").splice(2,3).join("-") + "-report.pdf"}
-             options={{orientation: 'landscape'}}>
+             options={{orientation: 'landscape', unit: 'mm', format: [1200,1850]}}>
           {({ toPdf }) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload} />&nbsp;Download Test Results</button>}
         </Pdf>
   );
@@ -147,7 +147,11 @@ class Upload extends Component {
   render() {
     return (
       <div className="Upload">
-        <span className="Title">Novel Coronavirus Disease (COVID-19) RT-PCR Test&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="nyulangone-logo.png" className="LogoIcon" alt="NYULangone"/></span>
+
+        <span className="Title">Novel Coronavirus Disease (COVID-19) RT-PCR Report Maker&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="topright"><img src="nyulangone-logo.png" className="LogoIcon" alt="NYULangone" align="right"/></div>
+
+          </span>
         <div className="Content">
           <div>
             <Dropzone
@@ -168,11 +172,12 @@ class Upload extends Component {
               );
             })}
             {this.state.files.length === 0 &&
-              <ul style={{fontSize: 18, listStyleType:"none"}}>
-                <li><FontAwesomeIcon icon={faUpload} />&nbsp;Upload COVID test data by dragging/dropping a file into the dashed circle on the left</li>
-                <li><FontAwesomeIcon icon={faDownload} />&nbsp;Save calculated test results by clicking on "Download Test Results" at the bottom</li>
-                <li><FontAwesomeIcon icon={faAddressCard} />&nbsp;Or Send notifications by clicking on "Email Test Results"</li>
-                <li><FontAwesomeIcon icon={faRedoAlt} />&nbsp;Reload new test data by clicking on "Upload RT-PCR data"</li>
+              <ul style={{fontSize: 18, fontWeight:600, listStyleType:"none"}}>
+                <li><FontAwesomeIcon icon={faUpload} />&nbsp;Upload: Click or drop a COVID CSV file into the dashed circle on the left, then click "Submit" button below</li>
+                <br/>
+                <li><FontAwesomeIcon icon={faDownload} />&nbsp;Save PDF table of run results by clicking on "Download Test Results" </li>
+                <li><FontAwesomeIcon icon={faAddressCard} />&nbsp;Send notifications by clicking on "Email Test Results"</li>
+                <li><FontAwesomeIcon icon={faRedoAlt} />&nbsp;Load new test data by clicking on "Upload RT-PCR data"</li>
               </ul>}
           </div>
         </div>

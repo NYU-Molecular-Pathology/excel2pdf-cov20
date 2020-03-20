@@ -35,15 +35,21 @@
 
 .Title {
   margin-bottom: 12px;
-  font-size: 18px;
+  font-size: 32px;
   font-weight: bold;
-  color: #555;
+  color: #881911;
 }
 
 .Filename {
   margin-bottom: 8px;
   font-size: 16px;
   color: #555;
+}
+
+.topright {
+  position: absolute;
+  top: 5%;
+  right: 2%;
 }
 
 .Row {
@@ -71,12 +77,12 @@
 
 button {
   font-family: "Roboto medium", sans-serif;
-  font-size: 12px;
+  font-size: 16px;
   display: inline-block;
-  height: 26px;
-  min-width: 88px;
-  padding: 6px 6px 6px 6px;
-  line-height: 1.42857143;
+  height: 24px;
+  min-width: 90px;
+  padding: 10px 5px 20px 10px;
+  line-height: 0;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;

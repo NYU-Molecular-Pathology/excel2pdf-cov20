@@ -120,7 +120,7 @@ class Report extends Component {
 
     getResults(testData, wellName) {
         let rows = []
-        rows.push(["SampleID", ...new Set(testData.map(s => s.name)),"Marker"]);
+        rows.push(["Sample ID", ...new Set(testData.map(s => s.name)),"Marker"]);
         rows.push(["Plate Well", ...(testData.filter(w => w.marker === "N1").map(w=>w.well.replace(wellName,""))), " "]);
         rows.push([wellName === "A"? "A":"E",...(testData.filter(w => w.marker === "N1").map(w=>w.ctValue)), "N1"]);
         rows.push([wellName === "A"? "B":"F",...(testData.filter(w => w.marker === "N2").map(w=>w.ctValue)),"N2"]);
@@ -172,8 +172,10 @@ class Report extends Component {
     render() {
         return (
             <div>
-                <span>{this.state.runID}</span><br />
-                <span>{this.state.runDate}</span><br />
+                <br/>
+                <span style={{fontSize: 18, fontWeight:600, padding:10}} >{this.state.runID}</span><br />
+                <br/>
+                <span style={{fontSize: 18, fontWeight:600, padding:10}}>{this.state.runDate}</span><br />
                 <table>
                     <thead>
                     {
