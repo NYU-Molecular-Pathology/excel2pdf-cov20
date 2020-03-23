@@ -172,9 +172,8 @@ class Upload extends Component {
               );
             })}
             {this.state.files.length === 0 &&
-              <ul style={{fontSize: 18, fontWeight:600, listStyleType:"none"}}>
+              <ul>
                 <li><FontAwesomeIcon icon={faUpload} />&nbsp;Upload: Click or drop a COVID CSV file into the dashed circle on the left, then click "Submit" button below</li>
-                <br/>
                 <li><FontAwesomeIcon icon={faDownload} />&nbsp;Save PDF table of run results by clicking on "Download Test Results" </li>
                 <li><FontAwesomeIcon icon={faAddressCard} />&nbsp;Send notifications by clicking on "Email Test Results"</li>
                 <li><FontAwesomeIcon icon={faRedoAlt} />&nbsp;Load new test data by clicking on "Upload RT-PCR data"</li>

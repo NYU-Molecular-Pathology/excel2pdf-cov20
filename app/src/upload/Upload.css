@@ -104,3 +104,9 @@ button:disabled {
   background: rgb(189, 189, 189);
   cursor: default;
 }
+
+ul {
+  font-size: 18px;
+  font-weight: 500;
+  list-style-type: none;
+}
