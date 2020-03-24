@@ -13,7 +13,7 @@ table {
 
 table th{
     background-color: #5da0e8;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
 }
 table, thead, th {
@@ -35,7 +35,7 @@ table tr {
     border: 1px solid #6a3f87;
     padding: 10px;
     font-stretch: condensed;
-    font-size: 9pt;
+    font-size: 11px;
 }
 
 table td.first {
@@ -63,7 +63,7 @@ table td:first-child {
     background-color: #d2caac;
     border: 1px solid #ffffff;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
 }
 
@@ -72,7 +72,7 @@ table td:last-child {
     border: 1px solid #ffffff;
     font-weight: 600;
     color: #3888e4;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
 }
 
