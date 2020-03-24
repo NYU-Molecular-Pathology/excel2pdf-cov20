@@ -13,7 +13,7 @@ import Pdf from "react-to-pdf";
 const Button = React.forwardRef((props, ref) => {
   return (
         <Pdf targetRef={ref} filename={Date().toString().split(" ").splice(2,3).join("-") + "-report.pdf"}
-             options={{orientation: 'landscape', unit: 'mm', format: [700, 1300]}}>
+             options={{orientation: 'landscape', unit: 'mm', format: [700, 1200]}}>
           {({ toPdf }) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload} />&nbsp;Download Test Results</button>}
         </Pdf>
   );
