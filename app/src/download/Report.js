@@ -44,9 +44,11 @@ class Report extends Component {
 
     getNTCResultVal(cols) {
         // NTC should be no readings for all 4 markers
-        if ([...new Set(cols)][0] === 'Undetermined') {
-            return "Pass";
-        } else {
+        if (cols[0] === "Undetermined" && cols[1] === "Undetermined"
+            && cols[2] === "Undetermined" && cols[3] === "Undetermined") {
+            return "Pass"
+        }
+        else {
             return "Failed";
         }
     }
