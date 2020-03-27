@@ -135,7 +135,9 @@ class Upload extends Component {
       <div className="Upload">
 
         <span className="Title">COVID-19 PDF Report Maker&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div className="topright"><img src="nyulangone-logo.png" className="LogoIcon" alt="NYULangone" align="right"/></div>
+          <div className="topright" style={{height: "225px", width: "532px"}}><img src="nyulangone-logo.png"
+                                                                                   className="LogoIcon" alt="NYULangone"
+                                                                                   align="right"/></div>
 
           </span>
         <div className="Content">

@@ -1,7 +1,8 @@
 .App {
   text-align: center;
   background-color: rgb(188, 185, 236);
-  background-size: cover;
+  background-image: url('./images/corona.jpg');
+  background-size: auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
