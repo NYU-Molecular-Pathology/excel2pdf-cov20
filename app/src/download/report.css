@@ -42,11 +42,9 @@ table th {
     padding: 5px;
     font-weight: normal;
     word-wrap: break-spaces;
-    font-stretch: condensed;
+
 }
 table, thead, th {
-    padding: 3px;
-    border-spacing: 15px;
     height: 25px;
 }
 
@@ -54,14 +52,14 @@ table td {
     border-right: 2px solid #848484;
     height: 25px;
 
-    word-wrap: break-word;
+    word-wrap: break-spaces;
 }
 
 table tr {
     background-color: #ffffff;
-    padding: 10px;
+
     height: 40px;
-    font-stretch: condensed;
+
 }
 
 table tr:last-child {
@@ -73,9 +71,6 @@ table tr:nth-last-child(2) {
     color: #2f92d9;
 }
 
-table td.first {
-    padding: 10px;
-}
 
 
 table tr:first-child {
@@ -113,25 +108,19 @@ table td:last-child {
 }
 
 th {
-    margin-inside: 15px;
     word-wrap: break-spaces;
-    word-break-wrap: spaces;
     text-align: left;
-    word-break: break-word;
-
 }
 
 th:last-child {
-
     word-wrap: break-spaces;
-    word-break-wrap: spaces;
     text-align: center;
     word-break: break-word;
     font-weight: bold;
 }
 
 thead {
-    margin-inside: 15px;
+
     word-wrap: break-spaces;
     word-break-wrap: spaces;
     text-align: left;
@@ -140,7 +129,6 @@ thead {
 }
 
 thead:last-child {
-    margin-inside: 15px;
     word-wrap: break-spaces;
     word-break-wrap: spaces;
     text-align: center;
@@ -150,7 +138,6 @@ thead:last-child {
 }
 
 thead:first-child {
-    margin-inside: 15px;
     word-wrap: break-spaces;
     word-break-wrap: spaces;
     text-align: center;
@@ -176,7 +163,7 @@ td {
 span {
     font-size: 15px;
     font-weight: 600;
-    padding: 10px;
+
 }
 
 
@@ -185,10 +172,9 @@ span {
     width: 50px;
     table-layout: fixed;
     font-size: 14pt;
-    padding: 5px;
+
     font-weight: normal;
     word-wrap: break-spaces;
-    font-stretch: condensed;
     background-color: #ffe583;
 }
 
@@ -196,10 +182,10 @@ span {
     height: 80px;
     width: 50px;
     font-size: 14pt;
-    padding: 5px;
+
     font-weight: normal;
     word-wrap: break-spaces;
-    font-stretch: condensed;
+
     background-color: #ffe583;
 }
 
@@ -207,10 +193,10 @@ span {
     height: 80px;
     width: 50px;
     font-size: 14pt;
-    padding: 5px;
+
     font-weight: normal;
     word-wrap: break-spaces;
-    font-stretch: condensed;
+
     background-color: #ffe583;
 }
 
