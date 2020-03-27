@@ -16,17 +16,15 @@
   border-radius: 25px;
   overflow-y: scroll;
   padding: 5%;
-  width: 800px;
-  height: 800px;
-  object-fit: cover;
-
+  width: 900px;
+  max-height: 400px;
   box-shadow: 15px 15px 30px 0 rgba(0, 0, 0, 0.11),
-    15px 5px 15px 0 rgba(0, 0, 0, 0.08);
+  15px 5px 15px 0 rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
 }
 
-.page {
-  width: 1200px;
-  height: 1000px;
-  border:solid 1px blue;
-}
+/*.page {*/
+/*  width: 1200px;*/
+/*  height: 1000px;*/
+/*  border:solid 1px blue;*/
+/*}*/

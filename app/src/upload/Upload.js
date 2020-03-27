@@ -2,17 +2,14 @@ import React, {Component} from "react";
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import Report from "../download/Report";
-import Email from "../notification/Email";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faDownload, faUpload} from '@fortawesome/fontawesome-free-solid'
-import {faAddressCard} from "@fortawesome/fontawesome-free-regular";
-import {faRedoAlt} from "@fortawesome/free-solid-svg-icons/faRedoAlt";
 import Pdf from "react-to-pdf";
 
 let fileName = "";
 
-function setFilename(fileobj) {
-  fileName = fileobj.name.split(".")[0];
+function setFilename(fileObj) {
+  fileName = fileObj.name.split(".")[0];
   return (fileName);
 }
 
@@ -23,9 +20,9 @@ const Button = React.forwardRef((props, ref) => {
       <Pdf targetRef={ref} filename={fileName + "-report.pdf"} x={.5}
            options={{
              orientation: 'landscape',unit: 'px',
-             format: [2225, 1425]
+             format: [2225, 1650]
            }}>
-        {({toPdf}) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload}/>&nbsp;Download Test Results</button>}
+        {({toPdf}) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload}/>&nbsp;Download PDF Report</button>}
       </Pdf>
   );
 });
@@ -55,10 +52,10 @@ class Upload extends Component {
   async uploadFiles() {
     this.setState({ uploadProgress: {}, uploading: true });
     const promises = [];
-    this.state.files.forEach(file => {
+    for (const file of this.state.files) {
       setFilename(file);
       promises.push(this.sendRequest(file));
-    });
+    }
     try {
       await Promise.all(promises);
 
@@ -106,17 +103,6 @@ class Upload extends Component {
     });
   }
 
-  renderProgress(file) {
-    const uploadProgress = this.state.uploadProgress[file.name];
-    if (this.state.uploading || this.state.successfullUploaded) {
-      return (
-        <div className="ProgressWrapper">
-
-        </div>
-      );
-    }
-  }
-
   _refreshPage() {
     window.location.reload();
   }
@@ -127,19 +113,18 @@ class Upload extends Component {
       return (
           <div>
             <div>
-              <Button ref={docToPrint} />&nbsp;&nbsp;&nbsp;
-              <Email />&nbsp;&nbsp;&nbsp;
-              <button onClick = {this._refreshPage} ><FontAwesomeIcon icon={faUpload} />&nbsp;Upload RT-PCR Data&nbsp;&nbsp;&nbsp;</button>
+              <Button ref={docToPrint}/>&nbsp;&nbsp;&nbsp;
+              <button onClick={this._refreshPage}><FontAwesomeIcon icon={faUpload}/>&nbsp;Upload another
+                CSV&nbsp;&nbsp;&nbsp;</button>
             </div>
             <div ref={docToPrint} className="ReportCard">
-              <Report dataFromParent = {this.state.files}/>
+              <Report dataFromParent={this.state.files}/>
             </div>
           </div>);
     } else {
       return (
-          <button
-              disabled={this.state.files.length < 1 || this.state.uploading}
-              onClick={this.uploadFiles}
+          <button disabled={this.state.files.length < 1 || this.state.uploading}
+                  onClick={this.uploadFiles}
           >Submit</button>
       );
     }
@@ -149,15 +134,15 @@ class Upload extends Component {
     return (
       <div className="Upload">
 
-        <span className="Title">Novel Coronavirus Disease (COVID-19) RT-PCR Report Maker&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span className="Title">COVID-19 PDF Report Maker&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <div className="topright"><img src="nyulangone-logo.png" className="LogoIcon" alt="NYULangone" align="right"/></div>
 
           </span>
         <div className="Content">
           <div>
             <Dropzone
-              onFilesAdded={this.onFilesAdded}
-              disabled={this.state.uploading || this.state.successfullUploaded}
+                onFilesAdded={this.onFilesAdded}
+                disabled={this.state.uploading || this.state.successfullUploaded}
             />
           </div>
           <div>
@@ -168,23 +153,17 @@ class Upload extends Component {
               return (
                 <div key={file.name} className="Row">
                   <span className="Filename">{file.name}</span>
-                  {this.renderProgress(file)}
                 </div>
               );
             })}
             {this.state.files.length === 0 &&
             <ul>
-              <li><FontAwesomeIcon icon={faUpload}/>&nbsp;Upload: Click or drop a COVID CSV file into the dashed circle
-                on the left, then click "Submit"
+              <li><FontAwesomeIcon icon={faUpload}/>&nbsp; Click the dashed circle on the left to select CSV file
               </li>
               <br/>
               <br/>
-              <li><FontAwesomeIcon icon={faDownload}/>&nbsp;Save PDF table of run results by clicking on "Download Test
-                Results"
+              <li><FontAwesomeIcon icon={faDownload}/>&nbsp;Save PDF table of run results by clicking on "Download PDF"
               </li>
-              <li><FontAwesomeIcon icon={faAddressCard}/>&nbsp;Send notifications by clicking on "Email Test Results"
-              </li>
-              <li><FontAwesomeIcon icon={faRedoAlt}/>&nbsp;Refresh page to upload a new csv file</li>
             </ul>}
           </div>
         </div>

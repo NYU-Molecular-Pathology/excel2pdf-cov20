@@ -150,7 +150,7 @@ class Report extends Component {
         const testData = this.state.data;
         let runID, runDate;
         if (testData.length > 0) {
-            runID = "RUN ID: " + testData[0].join().toString().split(".sds")[0].split(": ")[1];
+            runID = "    RUN ID: " + testData[0].join().toString().split(".sds")[0].split(": ")[1];
             // this.filename = runID;
             runDate = "RUN DATE: " + testData[8].join().replace("Last Modified: ","").split(",").slice(1,3).join();
             this.setState({
@@ -206,8 +206,9 @@ class Report extends Component {
         return (
             <div>
                 <br/>
-                <span style={{"font-size": "24pt"}}>{this.state.runID}</span> &nbsp;&nbsp;&nbsp;
-                <span style={{"font-size": "24pt"}}> {this.state.runDate}</span>
+                <span style={{"font-size": "24pt"}}>{"    " + this.state.runID}</span> &nbsp;&nbsp;&nbsp;
+                <span style={{"font-size": "14pt"}}> {this.state.runDate}</span>
+                <div className="boxed" style={{"text-align": "center", "font-size": "24pt"}}>Table 1</div>
                 <table>
                     <thead>
                     {
@@ -237,24 +238,26 @@ class Report extends Component {
                 {
                     this.state.aRows.slice(this.state.aRows.length-1).map((numList,i) =>(
                         <tr key={i}>
-                    {
-                        numList.map((num,j)=> ["Detected", "Failed", "QC Failed", "Inconclusive"].includes(num) ?
-                            <td key={j} style={{backgroundColor: "IndianRed"}}>{num}</td> : <td key={j}>{num}</td>
-                )
+                            {
+                                numList.map((num, j) => ["Detected", "Failed", "QC Failed", "Inconclusive"].includes(num) ?
+                                    <td key={j} style={{backgroundColor: "IndianRed"}}>{num}</td> :
+                                    <td key={j}>{num}</td>
+                                )
+                            }
+                        </tr>
+                    ))
                 }
-        </tr>
-        ))
-        }
                     </tbody>
-                </table><br />
-                { this.state.eRows.length > 0 &&
+                </table>
+                <div className="boxed" style={{"text-align": "center", "font-size": "24pt"}}>Table 2</div>
+                {this.state.eRows.length > 0 &&
                 <table>
                     <thead>
                     {
-                        this.state.eRows.slice(0,1).map((numList,i) =>(
+                        this.state.eRows.slice(0, 1).map((numList, i) => (
                             <tr key={i}>
                                 {
-                                    numList.map((num,j)=>
+                                    numList.map((num, j) =>
                                         <th key={j}>{spaceNames(num)}</th>
                                     )
                                 }
@@ -277,17 +280,28 @@ class Report extends Component {
                     {
                         this.state.eRows.slice(this.state.eRows.length-1).map((numList,i) =>(
                             <tr key={i}>
-                        {
-                            numList.map((num,j)=> ["Detected", "Failed", "QC Failed", "Inconclusive"].includes(num) ?
-                                <td key={j} style={{backgroundColor: "IndianRed"}}>{num}</td> : <td key={j}>{num}</td>
-                    )
-                    }
-                    </tr>
-                    ))
+                                {
+                                    numList.map((num, j) => ["Detected", "Failed", "QC Failed", "Inconclusive"].includes(num) ?
+                                        <td key={j} style={{backgroundColor: "IndianRed"}}>{num}</td> :
+                                        <td key={j}>{num}</td>
+                                    )
+                                }
+                            </tr>
+                        ))
                     }
                     </tbody>
-                </table>}
+                </table>
+
+                }
+                <div className="boxed">
+                    <li style={{"font-size": "18pt", "text-align": "right", "font-weight": "bold"}}> Legend</li>
+
+                    <li>UND = Undetermined & RP = RNA Positive</li>
+                    <li> EC = Extraction Control & PC = Positive Control</li>
+
+                </div>
             </div>
+
         );
     }
 }

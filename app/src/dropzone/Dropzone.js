@@ -31,7 +31,7 @@ class Dropzone extends Component {
 
   onDragOver(event) {
     event.preventDefault();
-    if (this.props.disabed) return;
+    if (this.props.disabled) return;
     this.setState({ hightlight: true });
   }
 

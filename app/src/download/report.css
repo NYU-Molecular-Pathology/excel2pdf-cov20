@@ -1,3 +1,8 @@
+.boxed {
+    font-size: 12pt;
+    border: 1px solid #848484;
+    text-align: right;
+}
 
 table {
     border-collapse: collapse;
@@ -5,22 +10,13 @@ table {
     padding: 10px;
     width: 1450px;
     height: 2800px;
-    table-layout: auto;
+    table-layout: fixed;
     font-size: 16pt;
     size: A4;
     object-fit: cover;
 }
 
-table th:last-child {
-    background-color: #85b394;
-    height: 80px;
-    min-width: 15px;
-    max-width: 15px;
-    table-layout: fixed;
-    font-size: 14pt;
-    font-weight: normal;
-    word-wrap: break-spaces;
-}
+
 
 table th:first-child {
     background-color: #85b394;
@@ -28,8 +24,8 @@ table th:first-child {
     min-width: 15px;
     max-width: 15px;
     table-layout: fixed;
-    font-size: 14pt;
-    font-weight: normal;
+    font-size: 18pt;
+    font-weight: bold;
     word-wrap: break-spaces;
 }
 
@@ -37,7 +33,8 @@ table th {
     background-color: #5da0e8;
     border-right: 2px solid #848484;
     height: 80px;
-    width: 50px;
+    min-width: 80px;
+    max-width: 80px;
     table-layout: fixed;
     font-size: 14pt;
     padding: 5px;
@@ -52,15 +49,14 @@ table, thead, th {
 table td {
     border-right: 2px solid #848484;
     height: 25px;
-
     word-wrap: break-spaces;
 }
 
 table tr {
     background-color: #ffffff;
-
+    min-width: 80px;
+    max-width: 80px;
     height: 40px;
-
 }
 
 table tr:last-child {
@@ -70,25 +66,51 @@ table tr:last-child {
 table tr:nth-last-child(2) {
     border-top: 2px solid #848484;
     color: #2f92d9;
+    min-width: 80px;
+    max-width: 80px;
 }
 
+table > tbody > tr:first-child > td:last-child {
+    background-color: snow;
+}
 
+table > tbody > tr:nth-last-child(2) > td:last-child {
+    background-color: snow;
+}
+
+table > tbody > tr:nth-last-child(1) > td:last-child {
+    background-color: snow;
+}
+
+table > tbody > tr:nth-last-child(1) > td:first-child {
+    background-color: #ffe583;
+    font-size: 16pt;
+    border-top: solid 3px #848484;
+}
+
+table > tbody > tr:nth-last-child(2) > td:first-child {
+    background-color: #ffe583;
+}
 
 table tr:first-child {
-    background-color: #85b394;
+    background-color: #d2caac;
     font-weight: bold;
     text-align: center;
 }
+
 
 table tr:last-child {
     background-color: #85b394;
     word-wrap: break-word;
     text-align: center;
+    font-size: 13pt;
 }
 
 table tr:nth-last-child(2) {
     word-wrap: break-word;
     text-align: center;
+    min-width: 80px;
+    max-width: 80px;
 }
 
 
@@ -99,14 +121,7 @@ table td:first-child {
     text-align: center;
 }
 
-table td:last-child {
-    background-color: #d2caac;
-    border-top: 1px solid #ffffff;
-    color: #3888e4;
-    font-size: 16pt;
-    font-weight: bold;
 
-}
 
 th {
     word-wrap: break-spaces;
@@ -135,7 +150,6 @@ thead:last-child {
     text-align: center;
     word-break: break-word;
     font-weight: bold;
-
 }
 
 thead:first-child {
@@ -170,10 +184,10 @@ span {
 
 .QCrow:nth-last-child(2) {
     height: 80px;
-    width: 50px;
     table-layout: fixed;
     font-size: 14pt;
-
+    min-width: 80px;
+    max-width: 80px;
     font-weight: normal;
     word-wrap: break-spaces;
     background-color: #ffe583;
@@ -181,26 +195,45 @@ span {
 
 .QCrow:nth-last-child(3) {
     height: 80px;
-    width: 50px;
     font-size: 14pt;
-
+    min-width: 80px;
+    max-width: 80px;
     font-weight: normal;
     word-wrap: break-spaces;
-
     background-color: #ffe583;
 }
 
 .QCrow:nth-child(2) {
     height: 80px;
-    width: 50px;
     font-size: 14pt;
-
     font-weight: normal;
     word-wrap: break-spaces;
-
+    min-width: 80px;
+    max-width: 80px;
     background-color: #ffe583;
 }
 
 .all {
     font-size: 12px;
+}
+
+table td:last-child {
+    background-color: #d2caac;
+    border-top: 1px solid #ffffff;
+    border-right: none;
+    color: #3888e4;
+    font-size: 18pt;
+    font-weight: bold;
+    min-width: 20px;
+    max-width: 20px;
+}
+
+table th:last-child {
+    border-right: none;
+    background-color: #85b394;
+    height: 80px;
+    font-size: 14pt;
+    font-weight: bold;
+    min-width: 20px;
+    max-width: 20px;
 }

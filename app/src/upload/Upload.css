@@ -1,6 +1,6 @@
 .Upload {
   display: flex;
-  font-size: 16pt;
+  font-size: 14pt;
   flex-direction: column;
   flex: 1;
   align-items: flex-start;
@@ -13,16 +13,15 @@
   flex-direction: row;
   padding-top: 16px;
   box-sizing: border-box;
-  font-size: 16pt;
+  font-size: 14pt;
   width: 100%;
 }
 
 .Files {
-  margin-left: 32px;
+  margin-left: 20px;
   align-items: flex-start;
   justify-items: flex-start;
-  font-size: 16pt;
-  flex: 1;
+  font-size: 14pt;
   overflow-y: auto;
 }
 
@@ -33,21 +32,21 @@
   flex-direction: column;
   margin-top: 32px;
   overflow: auto;
-  font-size: 16pt;
+  font-size: 14pt;
   flex-wrap: wrap;
 }
 
 .Title {
   margin-bottom: 12px;
-  font-size: 32pt;
+  font-size: 24pt;
   font-weight: bold;
-  color: #881911;
+  color: #442f88;
 }
 
 .Filename {
   margin-bottom: 8px;
   color: #555;
-  font-size: 16pt;
+  font-size: 14pt;
 }
 
 .topright {
@@ -61,23 +60,10 @@
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
-  height: 50px;
-  padding: 8px;
+  height: 10px;
+  padding: 20px;
   overflow: hidden;
   box-sizing: border-box;
-}
-
-.CheckIcon {
-  opacity: 0.5;
-  margin-left: 32px;
-}
-
-.ProgressWrapper {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  font-size: 16pt;
 }
 
 button {
@@ -106,22 +92,22 @@ button {
 }
 
 button:disabled {
-  background: rgb(189, 189, 189);
+  background: rgba(255, 255, 255, 0);
   cursor: default;
+  color: rgba(255, 255, 255, 0);
 }
 
 ul {
-  font-size: 18pt;
+  font-size: 14pt;
   font-weight: 500;
   list-style-type: none;
-  padding: 25px 25px;
 }
 
 li {
-  font-size: 18pt;
+  font-size: 14pt;
   font-weight: 500;
   list-style-type: none;
-  padding: 10px 0px;
+  padding: 8px;
 }
 
 .Filename {
