@@ -20,13 +20,10 @@ const Button = React.forwardRef((props, ref) => {
 
   return (
 
-      <Pdf targetRef={ref} filename={fileName + "-report.pdf"}
+      <Pdf targetRef={ref} filename={fileName + "-report.pdf"} x={.5}
            options={{
-             orientation: 'landscape', objectFit: "fill",
-             unit: 'px',
-             format: [2200, 1400],
-             width: '100%',
-             height: "100%"
+             orientation: 'landscape',unit: 'px',
+             format: [2225, 1425]
            }}>
         {({toPdf}) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload}/>&nbsp;Download Test Results</button>}
       </Pdf>
