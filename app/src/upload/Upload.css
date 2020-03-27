@@ -40,7 +40,7 @@
   margin-bottom: 12px;
   font-size: 24pt;
   font-weight: bold;
-  color: #442f88;
+  color: #482448;
 }
 
 .Filename {
@@ -99,8 +99,9 @@ button:disabled {
 
 ul {
   font-size: 14pt;
-  font-weight: 500;
+  font-weight: bold;
   list-style-type: none;
+  color: #404040;
 }
 
 li {

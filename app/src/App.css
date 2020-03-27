@@ -21,6 +21,8 @@
   max-height: 400px;
   box-shadow: 15px 15px 30px 0 rgba(0, 0, 0, 0.11),
   15px 5px 15px 0 rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  opacity: 90%;
   box-sizing: border-box;
 }
 

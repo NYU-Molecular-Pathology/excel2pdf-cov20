@@ -1,8 +1,22 @@
 .Dropzone {
-  height:120px;
+  height: 120px;
+  color: white;
   width: 120px;
-  background-color: #fff;
-  border: 2px dashed rgb(106, 63, 135);
+  background-color: rgba(131, 167, 203, 0.71);
+  border: 2px solid rgb(73, 35, 72);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.Dropzone:disabled {
+  height: 120px;
+  width: 120px;
+  background-color: rgba(253, 255, 251, 0);
+  border: 2px solid rgba(253, 255, 251, 0);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -15,17 +29,9 @@
   background-color: rgb(188, 185, 236);
 }
 
-.Icon {
-  opacity: 0.65;
-  height: 64px;
-  width: 64px;
-}
-
 .LogoIcon {
-  height: 64px;
-  width: 128px;
-  position: relative;
-  align-content: center;
+  height: 112px;
+  width: 266px;
 }
 
 .svgColor {

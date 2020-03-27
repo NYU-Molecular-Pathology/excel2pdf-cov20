@@ -135,16 +135,17 @@ class Upload extends Component {
       <div className="Upload">
 
         <span className="Title">COVID-19 PDF Report Maker&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div className="topright" style={{height: "225px", width: "532px"}}><img src="nyulangone-logo.png"
-                                                                                   className="LogoIcon" alt="NYULangone"
-                                                                                   align="right"/></div>
+          <div className="topright"><img src="nyulangone-logo.png"
+                                         className="LogoIcon" alt="NYULangone"
+                                         align="right"/></div>
 
           </span>
         <div className="Content">
           <div>
-            <Dropzone
-                onFilesAdded={this.onFilesAdded}
-                disabled={this.state.uploading || this.state.successfullUploaded}
+            <Dropzone className="Dzone"
+                      disabled={this.state.uploading || this.state.successfullUploaded}
+                      onFilesAdded={this.onFilesAdded}
+
             />
           </div>
           <div>
@@ -160,7 +161,7 @@ class Upload extends Component {
             })}
             {this.state.files.length === 0 &&
             <ul>
-              <li><FontAwesomeIcon icon={faUpload}/>&nbsp; Click the dashed circle on the left to select CSV file
+              <li><FontAwesomeIcon icon={faUpload}/>&nbsp; Click the circle on the left to select CSV file
               </li>
               <br/>
               <br/>
