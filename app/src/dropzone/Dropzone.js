@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./Dropzone.css";
 
 class Dropzone extends Component {
+
   constructor(props) {
     super(props);
     this.state = { hightlight: false };
@@ -73,11 +74,6 @@ class Dropzone extends Component {
           type="file"
           multiple
           onChange={this.onFilesAdded}
-        />
-        <img
-          alt="upload"
-          className="Icon"
-          src="cloud_upload.svg"
         />
         <span>Upload Data</span>
       </div>

@@ -1,10 +1,11 @@
 .Upload {
   display: flex;
+  font-size: 16pt;
   flex-direction: column;
   flex: 1;
   align-items: flex-start;
   text-align: left;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .Content {
@@ -12,6 +13,7 @@
   flex-direction: row;
   padding-top: 16px;
   box-sizing: border-box;
+  font-size: 16pt;
   width: 100%;
 }
 
@@ -19,6 +21,7 @@
   margin-left: 32px;
   align-items: flex-start;
   justify-items: flex-start;
+  font-size: 16pt;
   flex: 1;
   overflow-y: auto;
 }
@@ -30,20 +33,21 @@
   flex-direction: column;
   margin-top: 32px;
   overflow: auto;
+  font-size: 16pt;
   flex-wrap: wrap;
 }
 
 .Title {
   margin-bottom: 12px;
-  font-size: 32px;
+  font-size: 32pt;
   font-weight: bold;
   color: #881911;
 }
 
 .Filename {
   margin-bottom: 8px;
-  font-size: 16px;
   color: #555;
+  font-size: 16pt;
 }
 
 .topright {
@@ -73,15 +77,16 @@
   flex: 1;
   flex-direction: row;
   align-items: center;
+  font-size: 16pt;
 }
 
 button {
   font-family: "Roboto medium", sans-serif;
   font-size: 16px;
   display: inline-block;
-  height: 24px;
+  height: 50px;
   min-width: 90px;
-  padding: 10px 5px 20px 10px;
+  padding: 10px 10px 10px 10px;
   line-height: 0;
   text-align: center;
   white-space: nowrap;
@@ -106,7 +111,19 @@ button:disabled {
 }
 
 ul {
-  font-size: 18px;
+  font-size: 18pt;
   font-weight: 500;
   list-style-type: none;
+  padding: 25px 25px;
+}
+
+li {
+  font-size: 18pt;
+  font-weight: 500;
+  list-style-type: none;
+  padding: 10px 0px;
+}
+
+.Filename {
+  font-weight: bold;
 }

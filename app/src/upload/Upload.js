@@ -1,21 +1,34 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
-import Progress from "../progress/Progress";
 import Report from "../download/Report";
 import Email from "../notification/Email";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faUpload, faDownload} from '@fortawesome/fontawesome-free-solid'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faDownload, faUpload} from '@fortawesome/fontawesome-free-solid'
 import {faAddressCard} from "@fortawesome/fontawesome-free-regular";
 import {faRedoAlt} from "@fortawesome/free-solid-svg-icons/faRedoAlt";
 import Pdf from "react-to-pdf";
 
+let fileName = "";
+
+function setFilename(fileobj) {
+  fileName = fileobj.name.split(".")[0];
+  return (fileName);
+}
+
 const Button = React.forwardRef((props, ref) => {
+
   return (
-        <Pdf targetRef={ref} filename={Date().toString().split(" ").splice(2,3).join("-") + "-report.pdf"}
-             options={{orientation: 'landscape', unit: 'px', format: [1550,1830]}}>
-          {({ toPdf }) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload} />&nbsp;Download Test Results</button>}
-        </Pdf>
+
+      <Pdf targetRef={ref} filename={fileName + "-report.pdf"} x={.5} y={.5} objectFit={"contain"}
+           options={{
+             orientation: 'landscape', objectFit: "contain", padding: "10%",
+             unit: 'px',
+             format: [1400, 2120],
+             width: '50%'
+           }}>
+        {({toPdf}) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload}/>&nbsp;Download Test Results</button>}
+      </Pdf>
   );
 });
 
@@ -45,6 +58,7 @@ class Upload extends Component {
     this.setState({ uploadProgress: {}, uploading: true });
     const promises = [];
     this.state.files.forEach(file => {
+      setFilename(file);
       promises.push(this.sendRequest(file));
     });
     try {
@@ -99,16 +113,7 @@ class Upload extends Component {
     if (this.state.uploading || this.state.successfullUploaded) {
       return (
         <div className="ProgressWrapper">
-          <Progress progress={uploadProgress ? uploadProgress.percentage : 0} />
-          <img
-            className="CheckIcon"
-            alt="done"
-            src="check_circle.svg"
-            style={{
-              opacity:
-                uploadProgress && uploadProgress.state === "done" ? 0.5 : 0
-            }}
-          />
+
         </div>
       );
     }
@@ -134,12 +139,10 @@ class Upload extends Component {
           </div>);
     } else {
       return (
-        <button
-          disabled={this.state.files.length < 1 || this.state.uploading}
-          onClick={this.uploadFiles}
-        >
-          <FontAwesomeIcon icon={faUpload} />&nbsp;Submit
-        </button>
+          <button
+              disabled={this.state.files.length < 1 || this.state.uploading}
+              onClick={this.uploadFiles}
+          >Submit</button>
       );
     }
   }
@@ -172,12 +175,19 @@ class Upload extends Component {
               );
             })}
             {this.state.files.length === 0 &&
-              <ul>
-                <li><FontAwesomeIcon icon={faUpload} />&nbsp;Upload: Click or drop a COVID CSV file into the dashed circle on the left, then click "Submit" button below</li>
-                <li><FontAwesomeIcon icon={faDownload} />&nbsp;Save PDF table of run results by clicking on "Download Test Results" </li>
-                <li><FontAwesomeIcon icon={faAddressCard} />&nbsp;Send notifications by clicking on "Email Test Results"</li>
-                <li><FontAwesomeIcon icon={faRedoAlt} />&nbsp;Load new test data by clicking on "Upload RT-PCR data"</li>
-              </ul>}
+            <ul>
+              <li><FontAwesomeIcon icon={faUpload}/>&nbsp;Upload: Click or drop a COVID CSV file into the dashed circle
+                on the left, then click "Submit"
+              </li>
+              <br/>
+              <br/>
+              <li><FontAwesomeIcon icon={faDownload}/>&nbsp;Save PDF table of run results by clicking on "Download Test
+                Results"
+              </li>
+              <li><FontAwesomeIcon icon={faAddressCard}/>&nbsp;Send notifications by clicking on "Email Test Results"
+              </li>
+              <li><FontAwesomeIcon icon={faRedoAlt}/>&nbsp;Refresh page to upload a new csv file</li>
+            </ul>}
           </div>
         </div>
         <div className="Actions">{this.renderActions()}</div>
