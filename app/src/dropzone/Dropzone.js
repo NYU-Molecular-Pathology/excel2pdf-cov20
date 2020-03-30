@@ -62,7 +62,7 @@ class Dropzone extends Component {
     return (
       <div
           className={`Dropzone ${this.state.hightlight ? "Highlight" : ""}`}
-          disabled={this.state.hightlight}
+          disabled={this.state.disabled = true}
           onDragOver={this.onDragOver}
           onDragLeave={this.onDragLeave}
           onDrop={this.onDrop}

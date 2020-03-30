@@ -19,11 +19,14 @@ const Button = React.forwardRef((props, ref) => {
 
       <Pdf targetRef={ref} filename={fileName + "-report.pdf"} x={.5}
            options={{
-             orientation: 'landscape',unit: 'px',
+             orientation: 'landscape', unit: 'px',
              format: [1150, 850]
            }}>
-        {({toPdf}) => <button onClick={toPdf}><FontAwesomeIcon icon={faDownload}/>&nbsp;Download PDF Report</button>}
+        {({toPdf}) => <button onClick={toPdf}>
+          <FontAwesomeIcon icon={faDownload}/>&nbsp;Download PDF Report</button>}
       </Pdf>
+
+
   );
 });
 
@@ -34,7 +37,7 @@ class Upload extends Component {
       files: [],
       uploading: false,
       uploadProgress: {},
-      successfullUploaded: false
+      uploadSuccessful: false
     };
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
@@ -59,10 +62,10 @@ class Upload extends Component {
     try {
       await Promise.all(promises);
 
-      this.setState({ successfullUploaded: true, uploading: false });
+      this.setState({uploadSuccessful: true, uploading: false});
     } catch (e) {
       // Not Production ready! Do some error handling here instead...
-      this.setState({ successfullUploaded: true, uploading: false });
+      this.setState({uploadSuccessful: true, uploading: false});
     }
   }
 
@@ -109,14 +112,16 @@ class Upload extends Component {
 
   renderActions() {
     let docToPrint = React.createRef();
-    if (this.state.successfullUploaded) {
+    if (this.state.uploadSuccessful) {
       return (
           <div>
             <div>
               <Button ref={docToPrint}/>&nbsp;&nbsp;&nbsp;
               <button onClick={this._refreshPage}><FontAwesomeIcon icon={faUpload}/>&nbsp;Upload another
-                CSV&nbsp;&nbsp;&nbsp;</button>
+                CSV&nbsp;</button>
             </div>
+
+
             <div ref={docToPrint} className="ReportCard">
               <Report dataFromParent={this.state.files}/>
             </div>
@@ -143,7 +148,7 @@ class Upload extends Component {
         <div className="Content">
           <div>
             <Dropzone className="Dzone"
-                      disabled={this.state.uploading || this.state.successfullUploaded}
+                      disabled={this.state.uploading || this.state.uploadSuccessful}
                       onFilesAdded={this.onFilesAdded}
 
             />

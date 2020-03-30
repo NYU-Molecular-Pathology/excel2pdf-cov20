@@ -13,12 +13,12 @@
 }
 
 .Dropzone:disabled {
+  display: none;
   height: 120px;
   width: 120px;
   background-color: rgba(253, 255, 251, 0);
   border: 2px solid rgba(253, 255, 251, 0);
   border-radius: 50%;
-  display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;

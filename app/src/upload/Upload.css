@@ -91,6 +91,11 @@ button {
   outline: 0;
 }
 
+#Dzone:disabled {
+  visibility: hidden;
+  display: none;
+}
+
 button:disabled {
   background: rgba(255, 255, 255, 0);
   cursor: default;
