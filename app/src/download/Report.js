@@ -187,22 +187,6 @@ class Report extends Component {
     }
 
     render() {
-        function getNumber(num) {
-            if (num === "Undetermined") {
-                return ("UND")
-            } else {
-                return num
-            }
-        }
-
-        function spaceNames(num) {
-            if (num.includes("-")) {
-                return (num.replace(/-/g, "- "))
-            } else {
-                return num
-            }
-        }
-
         return (
             <div>
                 <br/>
@@ -216,7 +200,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num, j) =>
-                                        <th key={j} className={"QCrow"}>{spaceNames(num)} </th>
+                                        <th key={j} className={"QCrow"}>{num.toString().includes("-")? num.replace(/-/g, "- "):num} </th>
                                     )
                                 }
                             </tr>
@@ -229,7 +213,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
-                                        <td key={j}>{getNumber(num)}</td>
+                                        <td key={j}>{num === "Undetermined"? "UND":num}</td>
                                     )
                                 }
                             </tr>
@@ -258,7 +242,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num, j) =>
-                                        <th key={j}>{spaceNames(num)}</th>
+                                        <th key={j}>{num.toString().includes("-")? num.replace(/-/g, "- "):num}</th>
                                     )
                                 }
                             </tr>
@@ -271,7 +255,7 @@ class Report extends Component {
                             <tr key={i}>
                                 {
                                     numList.map((num,j)=>
-                                        <td key={j}>{getNumber(num)}</td>
+                                        <td key={j}>{num === "Undetermined"? "UND":num}</td>
                                     )
                                 }
                             </tr>

@@ -31,7 +31,7 @@ class Dropzone extends Component {
 
   onDragOver(event) {
     event.preventDefault();
-    if (this.props.disabled) return;
+    if (this.props.disabed) return;
     this.setState({ hightlight: true });
   }
 
@@ -41,7 +41,7 @@ class Dropzone extends Component {
 
   onDrop(event) {
     event.preventDefault();
-    if (this.props.disabled) return;
+    if (this.props.disabed) return;
     const files = event.dataTransfer.files;
     if (this.props.onFilesAdded) {
       const array = this.fileListToArray(files);
@@ -61,13 +61,12 @@ class Dropzone extends Component {
   render() {
     return (
       <div
-          className={`Dropzone ${this.state.hightlight ? "Highlight" : ""}`}
-          disabled={this.state.disabled = true}
-          onDragOver={this.onDragOver}
-          onDragLeave={this.onDragLeave}
-          onDrop={this.onDrop}
-          onClick={this.openFileDialog}
-          style={{ cursor: this.props.disabled ? "default" : "pointer" }}
+        className={`Dropzone ${this.state.hightlight ? "Highlight" : ""}`}
+        onDragOver={this.onDragOver}
+        onDragLeave={this.onDragLeave}
+        onDrop={this.onDrop}
+        onClick={this.openFileDialog}
+        style={{ cursor: this.props.disabled ? "default" : "pointer" }}
       >
         <input
           ref={this.fileInputRef}
@@ -75,7 +74,6 @@ class Dropzone extends Component {
           type="file"
           multiple
           onChange={this.onFilesAdded}
-
         />
         <span>Upload Data</span>
       </div>
